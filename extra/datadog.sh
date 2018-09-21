@@ -30,7 +30,6 @@ sed -i -e"s|^.*additional_checksd:.*$|additional_checksd: $DD_DIR/checks.d|" $DA
 APP_DATADOG_CONF_DIR="/app/datadog/conf.d"
 
 # Iterate over integration erb files and render them
-echo "--------------------------------------------"
 for file in "$APP_DATADOG_CONF_DIR"/*.erb; do
   echo "$file"
   test -e "$file" || continue # avoid errors when glob doesn't match anything
