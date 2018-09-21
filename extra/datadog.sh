@@ -29,6 +29,12 @@ sed -i -e"s|^.*additional_checksd:.*$|additional_checksd: $DD_DIR/checks.d|" $DA
 # Include application's datadog configs
 APP_DATADOG_CONF_DIR="/app/datadog/conf.d"
 
+# Iterate over integration erb files and render them
+for file in "$APP_DATADOG_CONF_DIR"/*.erb; do
+  test -e "$file" || continue # avoid errors when glob doesn't match anything
+  ./renderer.rb "$file" > "$(dirname $file)"/"$(basename "$file" .erb)"
+done
+
 for file in "$APP_DATADOG_CONF_DIR"/*.yaml; do
   test -e "$file" || continue # avoid errors when glob doesn't match anything
   filename=$(basename -- "$file")
