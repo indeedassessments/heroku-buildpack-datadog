@@ -33,8 +33,7 @@ APP_DATADOG_CONF_DIR="/app/datadog/conf.d"
 for file in "$APP_DATADOG_CONF_DIR"/*.erb; do
   echo "$file"
   test -e "$file" || continue # avoid errors when glob doesn't match anything
-  echo "$(./renderer.rb "$file")"
-  ./renderer.rb "$file" > "$(dirname $file)"/"$(basename "$file" .erb)"
+  /app/.profile.d/renderer.rb "$file" > "$(dirname $file)"/"$(basename "$file" .erb)"
 done
 
 for file in "$APP_DATADOG_CONF_DIR"/*.yaml; do
